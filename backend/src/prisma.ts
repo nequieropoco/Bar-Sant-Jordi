@@ -1,9 +1,9 @@
-import "dotenv/config";
-import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+// backend/src/prisma.ts
+import { PrismaClient } from '@prisma/client';
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
+export const prisma = new PrismaClient();
 
-export const prisma = new PrismaClient({ adapter });
+// Opcional: helper para cerrar conexión al apagar el servidor
+export async function disconnectPrisma() {
+  await prisma.$disconnect();
+}

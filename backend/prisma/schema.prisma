@@ -1,3 +1,5 @@
+// prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -5,8 +7,6 @@ generator client {
 datasource db {
   provider = "mysql"
 }
-
-
 
 model Department {
   id       String @id @default(cuid())
@@ -28,7 +28,7 @@ model Item {
   price        Decimal @db.Decimal(10, 2)
   order        Int
 
-  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  department Department   @relation(fields: [departmentId], references: [id], onDelete: Cascade)
   allergens  ItemAllergen[]
 
   createdAt DateTime @default(now())
@@ -55,8 +55,8 @@ model SupplementItem {
   price   Decimal @db.Decimal(10, 2)
   order   Int
 
-  group      SupplementGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  allergens  SupplementItemAllergen[]
+  group     SupplementGroup          @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  allergens SupplementItemAllergen[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -68,7 +68,7 @@ model Allergen {
   labelCa String
   labelEs String
 
-  items          ItemAllergen[]
+  items           ItemAllergen[]
   supplementItems SupplementItemAllergen[]
 
   createdAt DateTime @default(now())
@@ -114,15 +114,15 @@ model SuggestionSheet {
 }
 
 model SuggestionItem {
-  id        String @id @default(cuid())
-  sheetId   String
-  sheet     SuggestionSheet @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+  id      String @id @default(cuid())
+  sheetId String
 
-  section   SuggestionSection
-  titleCa   String
-  titleEs   String
-  price     Decimal @db.Decimal(10,2)
-  order     Int     @default(0)
+  sheet   SuggestionSheet   @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+  section SuggestionSection
+  titleCa String
+  titleEs String
+  price   Decimal @db.Decimal(10, 2)
+  order   Int     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
